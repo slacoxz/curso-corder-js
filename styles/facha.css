@@ -1,0 +1,118 @@
+/* Estilos generales */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+h1 {
+    text-align: center;
+    padding: 20px;
+    background-color: #4CAF50;
+    color: white;
+    margin: 0;
+}
+
+h2 {
+    color: #4CAF50;
+    text-align: center;
+}
+
+form, #productos-container, #resultado {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo de las etiquetas del formulario */
+form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+form input[type="text"], 
+form input[type="email"], 
+form input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+form input[type="text"]:focus, 
+form input[type="email"]:focus, 
+form input[type="number"]:focus {
+    border-color: #4CAF50;
+}
+
+/* Botones */
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    text-align: center;
+    font-size: 16px;
+    margin-top: 10px;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Productos */
+#productos-container div {
+    padding: 10px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#productos-container div p {
+    margin: 0;
+}
+
+#productos-container input[type="number"] {
+    width: 60px;
+    margin-right: 10px;
+}
+
+#productos-container button {
+    width: auto;
+    padding: 8px 16px;
+}
+
+/* Resultado de usuario */
+#resultado {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #e8f5e9;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+    text-align: left;
+}
+
+#resultado h3 {
+    margin-top: 0;
+}
+
+#resultado p {
+    margin: 8px 0;
+}
