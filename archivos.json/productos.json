@@ -31,43 +31,43 @@
     },
     {
         "id": 6,
-        "nombre": "",
+        "nombre": "Estelares",
         "precio": 2100,
         "imagen":"./imgs_de_productos/Arete-Modelo-ELA.webp"
     },
     {
         "id": 7,
-        "nombre": "",
+        "nombre": "Hoop Clásicos",
         "precio": 2100,
         "imagen":"./imgs_de_productos/Hcc6e4ec374dc4c4494a0faf258fa7561N.jpg_640x640q90.webp"
     },
     {
         "id": 8,
-        "nombre": "",
+        "nombre": "Aurora",
         "precio": 2100,
         "imagen":"./imgs_de_productos/Hdfe5103de7444c288165aad47a564167C.jpg_640x640Q90.jpg_.webp"
     },
     {
         "id": 9,
-        "nombre": "",
+        "nombre": "Seda",
         "precio": 2100,
         "imagen":"./imgs_de_productos/Pendientes-largos-con-borlas-de-Color-dorado-para-mujer-aretes-colgantes-de-cristal-mariposa-coraz-n.jpg_640x640_4.jpg"
     },
     {
         "id": 10,
-        "nombre": "",
+        "nombre": "Veronica",
         "precio": 2100,
         "imagen":"./imgs_de_productos/WhatsApp Image 2024-06-25 at 20.21.06 (1).jpeg"
     },
     {
         "id": 11,
-        "nombre": "",
+        "nombre": "Venecia",
         "precio": 2100,
         "imagen":"./imgs_de_productos/WhatsApp Image 2024-06-25 at 20.21.07.jpeg"
     },
     {
         "id": 12,
-        "nombre": "",
+        "nombre": "Corazon Plateado",
         "precio": 2100,
         "imagen":"./imgs_de_productos/WhatsApp Image 2024-06-25 at 20.21.09.jpeg"
     }
