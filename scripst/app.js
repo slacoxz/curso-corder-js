@@ -90,6 +90,14 @@ function mostrarNotificacion() {
 function mostrarCarrito() {
     const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
     const carritoDiv = document.getElementById('carrito');
+    const vaciarBtn = document.getElementById('vaciar-carrito');
+    carritoDiv.innerHTML = '';
+    if (carrito.length === 0) {
+        carritoDiv.innerHTML = '<p>No hay productos en el carrito</p>';
+        vaciarBtn.style.display = 'none'; // Ocultar el botón si no hay productos
+        return;
+    }
+    vaciarBtn.style.display = 'block'; // Mostrar el botón si hay productos
     if (!carritoDiv) {
         console.error('No se encontró el contenedor del carrito');
         return;
@@ -102,6 +110,7 @@ function mostrarCarrito() {
     }
 
     carrito.forEach(item => {
+        
         if (!item.nombre || !item.precio || !item.imagen || !item.id) {
             console.error("Producto inválido encontrado en el carrito.");
             return;

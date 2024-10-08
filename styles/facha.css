@@ -224,3 +224,18 @@ button:hover {
         text-align: center;
     }
 }
+#vaciar-carrito {
+    background-color: #ff5c5c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
+    display: none; /* Oculto por defecto, lo mostramos si hay productos */
+}
+
+#vaciar-carrito:hover {
+    background-color: #e04b4b;
+}
