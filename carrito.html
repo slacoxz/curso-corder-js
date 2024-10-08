@@ -7,15 +7,26 @@
     <link rel="stylesheet" href="./styles/facha.css">
 </head>
 <body>
-    <header>
-        <h1>Tu Carrito de Compras</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="index.html#productos">Productos</a></li>
+    <header class="header">
+        <div class="header-container">
+          <div class="logo">
+            <h1>Lily Accesorios</h1>
+          </div>
+          <nav class="nav-menu">
+            <ul class="nav-links">
+              <li><a href="#">Inicio</a></li>
+              <li><a href="./index.html">Productos</a></li>
+              <li><a href="#">Carrito</a></li>
             </ul>
-        </nav>
-    </header>
+          </nav>
+          <div class="cart-icon">
+            <a href="../carrito.html">
+              <i class="fas fa-shopping-bag"></i>
+              <span class="cart-count">0</span>
+            </a>
+          </div>
+        </div>
+      </header>
 
     <main>
         <button id="vaciar-carrito">Vaciar Carrito</button>
@@ -30,9 +41,45 @@
 
     </main>
 
-    <footer>
-        <p>&copy; 2024 Lily Accesorios</p>
-    </footer>
+    <footer class="footer">
+        <div class="footer-container">
+          <div class="footer-section">
+            <h3 class="footer-title">Lily Accesorios</h3>
+            <p>Tu tienda de accesorios de confianza. Encuentra lo mejor en moda y estilo para complementar tu look.</p>
+          </div>
+      
+          <div class="footer-section">
+            <h3 class="footer-title">Enlaces rápidos</h3>
+            <ul class="footer-links">
+              <li><a href="#">Inicio</a></li>
+              <li><a href="#">Productos</a></li>
+              <li><a href="#">Nosotros</a></li>
+              <li><a href="#">Contacto</a></li>
+            </ul>
+          </div>
+      
+          <div class="footer-section">
+            <h3 class="footer-title">Contacto</h3>
+            <p><i class="fas fa-map-marker-alt"></i> Calle Falsa 123, Buenos Aires, Argentina</p>
+            <p><i class="fas fa-phone"></i> +54 123 456 789</p>
+            <p><i class="fas fa-envelope"></i> contacto@lilyaccesorios.com</p>
+          </div>
+      
+          <div class="footer-section">
+            <h3 class="footer-title">Síguenos</h3>
+            <div class="social-icons">
+              <a href="#"><i class="fab fa-facebook"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-pinterest"></i></a>
+            </div>
+          </div>
+        </div>
+      
+        <div class="footer-bottom">
+          <p>&copy; 2024 Lily Accesorios. Todos los derechos reservados.</p>
+        </div>
+      </footer>
 
     <script src="./scripst/app.js"></script>
 </body>
