@@ -4,7 +4,7 @@ let productos = []; // Variable global para almacenar los productos
 // Función para cargar productos desde un JSON
 async function cargarProductos() {
     try {
-        const response = await fetch('./archivos.json/productos.json'); // Ruta del archivo JSON
+        const response = await fetch('./archivos.json/productos.json'); 
         if (!response.ok) throw new Error('Error al cargar los productos');
         
         productos = await response.json(); // Asignar los productos a la variable global
@@ -46,11 +46,8 @@ function mostrarProductos(productos) {
 
 // Función para agregar un producto al carrito
 function agregarAlCarrito(event) {
-    const idProducto = event.target.dataset.id;
-    const nombreProducto = event.target.dataset.nombre;
-    const precioProducto = event.target.dataset.precio;
-    const imagenProducto = event.target.dataset.imagen;
-
+    const { id: idProducto, nombre: nombreProducto, precio: precioProducto, imagen: imagenProducto } = event.target.dataset;
+    
     if (!idProducto || !nombreProducto || !precioProducto || !imagenProducto) {
         console.error("Faltan datos del producto. No se puede agregar al carrito.");
         return; // No agregar al carrito si falta información
@@ -73,6 +70,7 @@ function agregarAlCarrito(event) {
 
     localStorage.setItem('carrito', JSON.stringify(carrito));
     
+    actualizarNumeroCarrito();  // Actualizar el número de productos en el carrito
     mostrarNotificacion(); // Mostrar animación en vez de alert
     mostrarCarrito(); // Actualizar la vista del carrito
 }
@@ -89,25 +87,35 @@ function mostrarNotificacion() {
     }, 2000);
 }
 
+// Función para actualizar el número de productos en el carrito
+function actualizarNumeroCarrito() {
+    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    const numeroCarrito = document.getElementById('numero-carrito'); // Asegúrate de tener este elemento en el HTML.
+    if (numeroCarrito) {
+        numeroCarrito.textContent = carrito.length; // Muestra la cantidad de productos en el carrito
+    }
+}
+
 // Función para mostrar los productos del carrito y calcular el total
 function mostrarCarrito() {
     const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
     const carritoDiv = document.getElementById('carrito');
     const vaciarBtn = document.getElementById('vaciar-carrito');
-    carritoDiv.innerHTML = '';
-    let total = 0;
-
-    if (carrito.length === 0) {
-        carritoDiv.innerHTML = '<p>No hay productos en el carrito</p>';
-        vaciarBtn.style.display = 'none'; // Ocultar el botón si no hay productos
-        return;
-    }
-    vaciarBtn.style.display = 'block'; // Mostrar el botón si hay productos
+    
     if (!carritoDiv) {
         console.error('No se encontró el contenedor del carrito');
         return;
     }
+
     carritoDiv.innerHTML = ''; // Limpiar vista del carrito
+    let total = 0;
+
+    if (carrito.length === 0) {
+        carritoDiv.innerHTML = '<p>No hay productos en el carrito</p>';
+        if (vaciarBtn) vaciarBtn.style.display = 'none'; // Ocultar el botón si no hay productos
+        return;
+    }
+    if (vaciarBtn) vaciarBtn.style.display = 'block'; // Mostrar el botón si hay productos
 
     carrito.forEach(item => {
         const productoDiv = document.createElement('div');
@@ -133,13 +141,53 @@ function eliminarProducto(idProducto) {
     carrito = carrito.filter(item => item.id !== idProducto); // Filtrar productos para eliminar el seleccionado
     localStorage.setItem('carrito', JSON.stringify(carrito)); // Guardar nuevo carrito
     mostrarCarrito(); // Actualizar la vista del carrito
+    actualizarNumeroCarrito(); // Actualizar número de productos en el carrito
 }
 
 // Función para vaciar todo el carrito
 function vaciarCarrito() {
     localStorage.removeItem('carrito'); // Eliminar el carrito del localStorage
     mostrarCarrito(); // Actualizar la vista
+    actualizarNumeroCarrito(); // Actualizar número de productos en el carrito
 }
+
+// Función para finalizar la compra
+function finalizarCompra() {
+    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    if (carrito.length === 0) {
+        alert('No tienes productos en el carrito.');
+        return;
+    }
+    
+    alert('Gracias por tu compra!');
+
+    // Vaciar el carrito después de la compra
+    localStorage.removeItem('carrito');
+    mostrarCarrito();
+    actualizarNumeroCarrito();
+}
+
+// Event listeners
+document.addEventListener('DOMContentLoaded', () => {
+    cargarProductos(); // Cargar productos al inicio
+    mostrarCarrito(); // Mostrar productos en el carrito si los hay
+    actualizarNumeroCarrito(); // Actualizar número de productos al cargar la página
+
+    const ordenarSelect = document.getElementById('ordenar');
+    if (ordenarSelect) {
+        ordenarSelect.addEventListener('change', ordenarProductos); // Añadir funcionalidad de ordenar
+    }
+
+    const botonVaciar = document.getElementById('vaciar-carrito');
+    if (botonVaciar) {
+        botonVaciar.addEventListener('click', vaciarCarrito);
+    }
+
+    const finalizarBtn = document.getElementById('finalizar-compra');
+    if (finalizarBtn) {
+        finalizarBtn.addEventListener('click', finalizarCompra);
+    }
+});
 
 // Función para ordenar productos
 function ordenarProductos() {
@@ -151,18 +199,3 @@ function ordenarProductos() {
     }
     mostrarProductos(productos); // Volver a mostrar productos con el nuevo orden
 }
-
-// Cargar productos cuando se inicia la página
-document.addEventListener('DOMContentLoaded', () => {
-    cargarProductos(); // Cargar productos al inicio
-    const ordenarSelect = document.getElementById('ordenar');
-    if (ordenarSelect) {
-        ordenarSelect.addEventListener('change', ordenarProductos); // Añadir funcionalidad de ordenar
-    }
-    mostrarCarrito(); // Mostrar productos en el carrito si los hay
-
-    const botonVaciar = document.getElementById('vaciar-carrito');
-    if (botonVaciar) {
-        botonVaciar.addEventListener('click', vaciarCarrito);
-    }
-});
