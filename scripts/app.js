@@ -8,13 +8,13 @@ async function cargarProductos() {
         if (!response.ok) throw new Error('Error al cargar los productos');
         
         productos = await response.json(); // Asignar los productos a la variable global
-        mostrarProductos(productos);
+        mostrarProductos(productos); // Mostrar los productos en la página
     } catch (error) {
         console.error('Error al cargar los productos:', error);
     }
 }
 
-// Mostrar productos en la página principal
+// Mostrar productos en la página principal (index.html)
 function mostrarProductos(productos) {
     const productList = document.getElementById('product-list');
     if (!productList) {
@@ -47,7 +47,7 @@ function mostrarProductos(productos) {
 // Función para agregar un producto al carrito
 function agregarAlCarrito(event) {
     const { id: idProducto, nombre: nombreProducto, precio: precioProducto, imagen: imagenProducto } = event.target.dataset;
-    
+
     if (!idProducto || !nombreProducto || !precioProducto || !imagenProducto) {
         console.error("Faltan datos del producto. No se puede agregar al carrito.");
         return; // No agregar al carrito si falta información
@@ -72,7 +72,6 @@ function agregarAlCarrito(event) {
     
     actualizarNumeroCarrito();  // Actualizar el número de productos en el carrito
     mostrarNotificacion(); // Mostrar animación en vez de alert
-    mostrarCarrito(); // Actualizar la vista del carrito
 }
 
 // Función para mostrar notificación en vez de alert
@@ -87,115 +86,16 @@ function mostrarNotificacion() {
     }, 2000);
 }
 
-// Función para actualizar el número de productos en el carrito
+// Actualizar el número de productos en el ícono del carrito
 function actualizarNumeroCarrito() {
     const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
     const numeroCarrito = document.getElementById('numero-carrito'); // Asegúrate de tener este elemento en el HTML.
     if (numeroCarrito) {
-        numeroCarrito.textContent = carrito.length; // Muestra la cantidad de productos en el carrito
+        numeroCarrito.textContent = carrito.reduce((acc, item) => acc + item.cantidad, 0); // Muestra la cantidad total de productos en el carrito
     }
 }
 
-// Función para mostrar los productos del carrito y calcular el total
-function mostrarCarrito() {
-    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    const carritoDiv = document.getElementById('carrito');
-    const vaciarBtn = document.getElementById('vaciar-carrito');
-    
-    if (!carritoDiv) {
-        console.error('No se encontró el contenedor del carrito');
-        return;
-    }
-
-    carritoDiv.innerHTML = ''; // Limpiar vista del carrito
-    let total = 0;
-
-    if (carrito.length === 0) {
-        carritoDiv.innerHTML = '<p>No hay productos en el carrito</p>';
-        if (vaciarBtn) vaciarBtn.style.display = 'none'; // Ocultar el botón si no hay productos
-        return;
-    }
-    if (vaciarBtn) vaciarBtn.style.display = 'block'; // Mostrar el botón si hay productos
-
-    carrito.forEach(item => {
-        const productoDiv = document.createElement('div');
-        productoDiv.classList.add('carrito-item');
-        productoDiv.innerHTML = `
-            <img src="${item.imagen}" alt="${item.nombre}">
-            <p>${item.nombre} - ${item.precio} $ - Cantidad: ${item.cantidad}</p>
-            <button onclick="eliminarProducto('${item.id}')">Eliminar</button>
-        `;
-        carritoDiv.appendChild(productoDiv);
-        total += item.precio * item.cantidad;
-    });
-
-    const totalDiv = document.createElement('div');
-    totalDiv.classList.add('total-carrito');
-    totalDiv.innerHTML = `<h3>Total: ${total} $</h3>`;
-    carritoDiv.appendChild(totalDiv);
-}
-
-// Función para eliminar un producto específico del carrito
-function eliminarProducto(idProducto) {
-    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    carrito = carrito.filter(item => item.id !== idProducto); // Filtrar productos para eliminar el seleccionado
-    localStorage.setItem('carrito', JSON.stringify(carrito)); // Guardar nuevo carrito
-    mostrarCarrito(); // Actualizar la vista del carrito
-    actualizarNumeroCarrito(); // Actualizar número de productos en el carrito
-}
-
-// Función para vaciar todo el carrito
-function vaciarCarrito() {
-    localStorage.removeItem('carrito'); // Eliminar el carrito del localStorage
-    mostrarCarrito(); // Actualizar la vista
-    actualizarNumeroCarrito(); // Actualizar número de productos en el carrito
-}
-
-// Función para finalizar la compra
-function finalizarCompra() {
-    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    if (carrito.length === 0) {
-        alert('No tienes productos en el carrito.');
-        return;
-    }
-    
-    alert('Gracias por tu compra!');
-
-    // Vaciar el carrito después de la compra
-    localStorage.removeItem('carrito');
-    mostrarCarrito();
-    actualizarNumeroCarrito();
-}
-
-// Event listeners
 document.addEventListener('DOMContentLoaded', () => {
     cargarProductos(); // Cargar productos al inicio
-    mostrarCarrito(); // Mostrar productos en el carrito si los hay
-    actualizarNumeroCarrito(); // Actualizar número de productos al cargar la página
-
-    const ordenarSelect = document.getElementById('ordenar');
-    if (ordenarSelect) {
-        ordenarSelect.addEventListener('change', ordenarProductos); // Añadir funcionalidad de ordenar
-    }
-
-    const botonVaciar = document.getElementById('vaciar-carrito');
-    if (botonVaciar) {
-        botonVaciar.addEventListener('click', vaciarCarrito);
-    }
-
-    const finalizarBtn = document.getElementById('finalizar-compra');
-    if (finalizarBtn) {
-        finalizarBtn.addEventListener('click', finalizarCompra);
-    }
+    actualizarNumeroCarrito(); // Llamarlo al cargar la página
 });
-
-// Función para ordenar productos
-function ordenarProductos() {
-    const criterio = document.getElementById('ordenar').value;
-    if (criterio === 'precio-asc') {
-        productos.sort((a, b) => a.precio - b.precio);
-    } else if (criterio === 'precio-desc') {
-        productos.sort((a, b) => b.precio - a.precio);
-    }
-    mostrarProductos(productos); // Volver a mostrar productos con el nuevo orden
-}

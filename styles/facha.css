@@ -422,3 +422,25 @@ button:hover {
     }
   }
   
+  .acciones-carrito {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-vaciar, .btn-finalizar {
+    padding: 10px 20px;
+    background-color: #ff5252;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.btn-finalizar {
+    background-color: #003366;
+}
+
+.btn-vaciar:hover, .btn-finalizar:hover {
+    opacity: 0.8;
+}
