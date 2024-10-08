@@ -55,7 +55,7 @@ header nav ul li a {
 }
 
 button {
-    background-color: red;
+    background-color: #003366;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -63,7 +63,7 @@ button {
 }
 
 button:hover {
-    background-color: darkred;
+    background-color: rgb(11, 18, 119);
 }
 /* Estilo de la notificación */
 .notificacion {
@@ -90,7 +90,7 @@ button:hover {
 }
 
 .carrito-item button {
-    background-color: #f44336;
+    background-color: #003366;
     color: white;
     border: none;
     padding: 5px 10px;
@@ -99,7 +99,7 @@ button:hover {
 }
 
 .carrito-item button:hover {
-    background-color: #d32f2f;
+    background-color:  #003366;
 }
 
 /* Estilos para el contenedor de los productos */
@@ -190,7 +190,7 @@ button:hover {
 
 /* Botón de eliminar */
 .carrito-item button {
-    background-color: #ff5c5c;
+    background-color: #003366;
     color: white;
     border: none;
     padding: 10px 15px;
@@ -200,7 +200,7 @@ button:hover {
 }
 
 .carrito-item button:hover {
-    background-color: #e04b4b;
+    background-color: #003366;
 }
 
 /* Ajustes en móviles */
@@ -225,7 +225,7 @@ button:hover {
     }
 }
 #vaciar-carrito {
-    background-color: #ff5c5c;
+    background-color:  #003366;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -233,9 +233,15 @@ button:hover {
     cursor: pointer;
     transition: background-color 0.3s ease;
     margin-top: 15px;
-    display: none; /* Oculto por defecto, lo mostramos si hay productos */
+    display: none;
 }
 
 #vaciar-carrito:hover {
-    background-color: #e04b4b;
+    background-color:  #003366;
+}
+
+.total-carrito {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 20px;
 }

@@ -1,10 +1,13 @@
+// Variables globales
+let productos = []; // Variable global para almacenar los productos
+
 // Función para cargar productos desde un JSON
 async function cargarProductos() {
     try {
-        const response = await fetch('./archivos.json/productos.json'); // Cargar archivo JSON de productos
+        const response = await fetch('./archivos.json/productos.json'); // Ruta del archivo JSON
         if (!response.ok) throw new Error('Error al cargar los productos');
         
-        const productos = await response.json();
+        productos = await response.json(); // Asignar los productos a la variable global
         mostrarProductos(productos);
     } catch (error) {
         console.error('Error al cargar los productos:', error);
@@ -62,7 +65,7 @@ function agregarAlCarrito(event) {
         carrito.push({
             id: idProducto,
             nombre: nombreProducto,
-            precio: precioProducto,
+            precio: parseFloat(precioProducto), // Convertir precio a número
             imagen: imagenProducto,
             cantidad: 1
         }); // Si no está, añadir al carrito
@@ -86,12 +89,14 @@ function mostrarNotificacion() {
     }, 2000);
 }
 
-// Función para mostrar los productos del carrito
+// Función para mostrar los productos del carrito y calcular el total
 function mostrarCarrito() {
     const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
     const carritoDiv = document.getElementById('carrito');
     const vaciarBtn = document.getElementById('vaciar-carrito');
     carritoDiv.innerHTML = '';
+    let total = 0;
+
     if (carrito.length === 0) {
         carritoDiv.innerHTML = '<p>No hay productos en el carrito</p>';
         vaciarBtn.style.display = 'none'; // Ocultar el botón si no hay productos
@@ -104,17 +109,7 @@ function mostrarCarrito() {
     }
     carritoDiv.innerHTML = ''; // Limpiar vista del carrito
 
-    if (carrito.length === 0) {
-        carritoDiv.innerHTML = '<p>No hay productos en el carrito</p>';
-        return;
-    }
-
     carrito.forEach(item => {
-        
-        if (!item.nombre || !item.precio || !item.imagen || !item.id) {
-            console.error("Producto inválido encontrado en el carrito.");
-            return;
-        }
         const productoDiv = document.createElement('div');
         productoDiv.classList.add('carrito-item');
         productoDiv.innerHTML = `
@@ -123,15 +118,19 @@ function mostrarCarrito() {
             <button onclick="eliminarProducto('${item.id}')">Eliminar</button>
         `;
         carritoDiv.appendChild(productoDiv);
+        total += item.precio * item.cantidad;
     });
+
+    const totalDiv = document.createElement('div');
+    totalDiv.classList.add('total-carrito');
+    totalDiv.innerHTML = `<h3>Total: ${total} $</h3>`;
+    carritoDiv.appendChild(totalDiv);
 }
 
 // Función para eliminar un producto específico del carrito
 function eliminarProducto(idProducto) {
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    
     carrito = carrito.filter(item => item.id !== idProducto); // Filtrar productos para eliminar el seleccionado
-
     localStorage.setItem('carrito', JSON.stringify(carrito)); // Guardar nuevo carrito
     mostrarCarrito(); // Actualizar la vista del carrito
 }
@@ -142,17 +141,14 @@ function vaciarCarrito() {
     mostrarCarrito(); // Actualizar la vista
 }
 
-// Función para ordenar productos (según la lógica que prefieras)
+// Función para ordenar productos
 function ordenarProductos() {
     const criterio = document.getElementById('ordenar').value;
-    let productos = JSON.parse(localStorage.getItem('productos')) || [];
-
     if (criterio === 'precio-asc') {
         productos.sort((a, b) => a.precio - b.precio);
     } else if (criterio === 'precio-desc') {
         productos.sort((a, b) => b.precio - a.precio);
     }
-
     mostrarProductos(productos); // Volver a mostrar productos con el nuevo orden
 }
 
