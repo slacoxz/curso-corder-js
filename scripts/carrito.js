@@ -60,16 +60,16 @@ function vaciarCarrito() {
     mostrarCarrito(); // Actualizar la vista
 }
 
-// Función para finalizar la compra
+// Función para finalizar compra con animación en vez de alert
 function finalizarCompra() {
     const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
     if (carrito.length === 0) {
-        alert('No tienes productos en el carrito.');
+        mostrarNotificacion('No tienes productos en el carrito.', 'error');
         return;
     }
     
-    // Aquí puedes manejar el proceso de pago o redirigir a una página de confirmación
-    alert('Gracias por tu compra!');
+    // Mostrar notificación de compra finalizada con animación
+    mostrarNotificacion('¡Gracias por tu compra!', 'success');
 
     // Vaciar el carrito después de la compra
     localStorage.removeItem('carrito');
@@ -77,7 +77,25 @@ function finalizarCompra() {
     actualizarNumeroCarrito();
 }
 
-// Actualizar el número de productos en el ícono del carrito (opcional)
+// Función para mostrar la notificación con animación
+function mostrarNotificacion(mensaje, tipo) {
+    const notificacion = document.createElement('div');
+    notificacion.classList.add('notificacion', tipo);
+    notificacion.textContent = mensaje;
+    document.body.appendChild(notificacion);
+
+    // Mostrar animación de fade-in/fade-out
+    setTimeout(() => {
+        notificacion.classList.add('visible');
+    }, 100); 
+
+    setTimeout(() => {
+        notificacion.classList.remove('visible');
+        setTimeout(() => notificacion.remove(), 500); 
+    }, 3000); 
+}
+
+// Actualizar el número de productos en el ícono del carrito 
 function actualizarNumeroCarrito() {
     const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
     const numeroCarrito = document.getElementById('numero-carrito'); // Asegúrate de tener este elemento en el HTML.
